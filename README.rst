@@ -47,15 +47,16 @@ gumpy core developers and contributors
 How to cite gumpy
 =================
 
-Zied Tayeb, Nicolai Waniek, Juri Fedjaev, Leonard Rychly, Christian
-Widderich, Jorg Conradt, "gumpy: A Python Toolbox for Hybrid
-Brain-Computer Interfaces"
+Zied Tayeb, Nicolai Waniek, Juri Fedjaev, Nejla Ghaboosi, Leonard Rychly,
+Christian Widderich, Christoph Richter, Jörg Conradt. "gumpy: A Python Toolbox
+Suitable for Hybrid Brain-Computer Interfaces"
+
 
 .. code:: latex
 
     @Article{gumpy2018,
-        Title = {gumpy: A Python Toolbox for Hybrid Brain-Computer Interfaces},
-        Author = {Tayeb, Zied and Waniek, Nicolai and Fedjaev, Juri and Rychly, Leonard and Widderich, Christian and Conradt, Jorg},
+        Title = {gumpy: A Python Toolbox Suitable for Hybrid Brain-Computer Interfaces},
+        Author = {Tayeb, Zied and Waniek, Nicolai and Fedjaev, Juri and Ghaboosi, Nejla and Rychly, Leonard and Widderich, Christian and Richter, Christoph and Conradt, Jorg},
         Year = {2018},
         Journal = {}
     }
@@ -67,7 +68,7 @@ Additional References
 * www.gumpy.org: gumpy's main website. You can find links to datasets here
 * www.github.com/gumpy-bci/gumpy: gumpy's main github repository
 * www.github.com/gumpy-bci/gumpy-deeplearning: gumpy's deep learning models for BCI
-
+* https://www.youtube.com/watch?v=M68GeL8PafE
 
 License
 =======

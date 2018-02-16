@@ -19,19 +19,18 @@ perform data analysis and implement novel classifiers. Moreover, one of
 How to cite gumpy
 =================
 
-Zied Tayeb, Nicolai Waniek, Juri Fedjaev, Leonard Rychly, Christian
-Widderich, Jorg Conradt, "gumpy: A Python Toolbox for Hybrid
-Brain-Computer Interfaces", 2018
+"gumpy: A Python Toolbox Suitable for Hybrid Brain-Computer Interfaces".
+Zied Tayeb, Nicolai Waniek, Juri Fedjaev, Nejla Ghaboosi, Leonard Rychly,
+Christian Widderich, Christoph Richter, Jörg Conradt. 2018
 
 .. code:: latex
 
     @Article{gumpy2018,
-        Title = {gumpy: A Python Toolbox for Hybrid Brain-Computer Interfaces},
-        Author = {Tayeb, Zied and Waniek, Nicolai and Fedjaev, Juri and Rychly, Leonard and Widderich, Christian and Conradt, Jorg},
+        Title = {gumpy: A Python Toolbox Suitable for Hybrid Brain-Computer Interfaces},
+        Author = {Tayeb, Zied and Waniek, Nicolai and Fedjaev, Juri and Ghaboosi, Nejla and Rychly, Leonard and Widderich, Christian and Richter, Christoph and Conradt, Jorg},
         Year = {2018},
         Journal = {}
     }
-
 
 
 User and developer guides
