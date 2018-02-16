@@ -5,6 +5,7 @@ import gumpy.plot
 import gumpy.signal
 import gumpy.utils
 import gumpy.features
+import gumpy.split
 
 # fetch into gumpy-scope so that users don't have to specify the entire
 # namespace
