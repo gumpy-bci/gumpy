@@ -79,7 +79,7 @@ class SVM(Classifier):
 
         This will avoid grid search during initialization.
         """
-        return {'cross_validation', False}
+        return {'cross_validation': False}
 
 
     def run(self, X_train, Y_train, X_test, Y_test, **kwargs):
@@ -220,7 +220,7 @@ class MLP(Classifier):
         if ftype == 'vote':
             # check if we got the training data
             X_train = kwargs.pop('X_train', None)
-            if features is not None:
+            if X_train is not None:
                 # TODO: check dimensions!
                 opts['hidden_layer_sizes'] = (X_train.shape[1], X_train.shape[1])
 
@@ -323,7 +323,7 @@ class RandomForest(Classifier):
 
         This will avoid grid search during initialization.
         """
-        return {'cross_validation', False}
+        return {'cross_validation': False}
 
 
     def run(self, X_train, Y_train, X_test, Y_test, **kwargs):
