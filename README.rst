@@ -1,15 +1,15 @@
 gumpy
 =====
 
-`gumpy` is a Python 3 toolbox to develop Brain-Computer Interfaces (BCI).
+``gumpy`` is a Python 3 toolbox to develop Brain-Computer Interfaces (BCI).
 
-`gumpy` contains implementations of several functions that are commonly used
+``gumpy`` contains implementations of several functions that are commonly used
 during EEG and EMG decoding. For this purpose it heavily relies on other
-numerical and scientific libraries, for instance `numpy`, `scipy`, or
-`scikit-learn`, to name just a few. In fact, `gumpy` mostly wraps existing
+numerical and scientific libraries, for instance ``numpy``, ``scipy``, or
+``scikit-learn``, to name just a few. In fact, ``gumpy`` mostly wraps existing
 functions in such a way that researchers working in the field can quickly
 perform data analysis and implement novel classifiers. Moreover, one of
-`gumpy`'s design principles was to make it easily extendable.
+``gumpy``'s design principles was to make it easily extendable.
 
 :license: MIT License
 :contributions: Please use github (www.github.com/gumpy-bci/gumpy) and see below
@@ -20,7 +20,7 @@ Documentation
 =============
 
 You can find documentation for gumpy either on www.gumpy.org or in subfolder
-`doc`. For examples, see the folder `examples`.
+``doc``. For examples, see the folder ``examples``.
 
 
 Contributing
