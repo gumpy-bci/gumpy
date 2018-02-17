@@ -105,7 +105,7 @@ class NST(Dataset):
         self.trials = np.concatenate((trials1, trials2, trials3))
         self.sampling_freq = fs
         if self.n_classes == 2: # Remove class 3 if desired
-            c3_idxs = np.where(labels==2)[0]
+            c3_idxs = np.where(self.labels==2)[0]
             self.labels = np.delete(self.labels, c3_idxs)
             self.trials = np.delete(self.trials, c3_idxs)
 
