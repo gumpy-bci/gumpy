@@ -215,7 +215,7 @@ class MLP(Classifier):
             # check if we got the features
             features = kwargs.pop('features', None)
             if features is not None:
-                opts['hidden_layer_sizes'] = (features.shape[1], features.shape[2])
+                opts['hidden_layer_sizes'] = (features.shape[0], features.shape[1])
 
         if ftype == 'vote':
             # check if we got the training data
