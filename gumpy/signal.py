@@ -31,17 +31,17 @@ import pywt
 
 
 class ButterBandpass:
-    """Filter class for a butter bandpass filter.
+    """Filter class for a Butterworth bandpass filter.
 
     """
 
     def __init__(self, lowcut, highcut, order=4, fs=256):
-        """Initialize the butter bandpass filter.
+        """Initialize the Butterworth bandpass filter.
 
         Args:
             lowcut (float): low cut-off frequency
             highcut (float): high cut-off frequency
-            order (int): order of the butter bandpass filter
+            order (int): order of the Butterworth bandpass filter
             fs (int): sampling frequency
 
         """
@@ -71,7 +71,7 @@ class ButterBandpass:
 
 
 def butter_bandpass(data, lo, hi, axis=0, **kwargs):
-    """Apply a butter bandpass filter to some data.
+    """Apply a Butterworth bandpass filter to some data.
 
     The function either takes an ``array_like`` object (e.g. numpy's ndarray) or
     an instance of a gumpy.data.Dataset subclass as first argument.
@@ -101,16 +101,16 @@ def butter_bandpass(data, lo, hi, axis=0, **kwargs):
 
 
 class ButterHighpass:
-    """Filter class for a butter bandpass filter.
+    """Filter class for a Butterworth bandpass filter.
 
     """
 
     def __init__(self, cutoff, order=4, fs=256):
-        """Initialize the butter highpass filter.
+        """Initialize the Butterworth highpass filter.
 
         Args:
             cutoff (float): cut-off frequency
-            order (int): order of the butter bandpass filter
+            order (int): order of the Butterworth bandpass filter
             fs (int): sampling frequency
 
         """
@@ -138,7 +138,7 @@ class ButterHighpass:
 
 
 def butter_highpass(data, cutoff, axis=0, **kwargs):
-    """Apply a butter highpass filter to some data.
+    """Apply a Butterworth highpass filter to some data.
 
     The function either takes an ``array_like`` object (e.g. numpy's ndarray) or
     an instance of a gumpy.data.Dataset subclass as first argument.
@@ -168,16 +168,16 @@ def butter_highpass(data, cutoff, axis=0, **kwargs):
 
 
 class ButterLowpass:
-    """Filter class for a butter lowpass filter.
+    """Filter class for a Butterworth lowpass filter.
 
     """
 
     def __init__(self, cutoff, order=4, fs=256):
-        """Initialize the butter lowpass filter.
+        """Initialize the Butterworth lowpass filter.
 
         Args:
             cutoff (float): cut-off frequency
-            order (int): order of the butter bandpass filter
+            order (int): order of the Butterworth bandpass filter
             fs (int): sampling frequency
 
         """
@@ -205,7 +205,7 @@ class ButterLowpass:
 
 
 def butter_lowpass(data, cutoff, axis=0, **kwargs):
-    """Apply a butter lowpass filter to some data.
+    """Apply a Butterworth lowpass filter to some data.
 
     The function either takes an ``array_like`` object (e.g. numpy's ndarray) or
     an instance of a gumpy.data.Dataset subclass as first argument.
@@ -234,17 +234,17 @@ def butter_lowpass(data, cutoff, axis=0, **kwargs):
 
 
 class ButterBandstop:
-    """Filter class for a butter bandstop filter.
+    """Filter class for a Butterworth bandstop filter.
 
     """
 
     def __init__(self, lowpass=49, highpass=51, order=4, fs=256):
-        """Initialize the butter bandstop filter.
+        """Initialize the Butterworth bandstop filter.
 
         Args:
             lowpass (float): low cut-off frequency. Default = 49
             highapss (float): high cut-off frequency. Default = 51
-            order (int): order of the butter bandpass filter.
+            order (int): order of the Butterworth bandpass filter.
             fs (int): sampling frequency
         """
         self.lowpass = lowpass
@@ -273,7 +273,7 @@ class ButterBandstop:
 
 
 def butter_bandstop(data, axis=0, **kwargs):
-    """Apply a butter bandstop filter to some data.
+    """Apply a Butterworth bandstop filter to some data.
 
     The function either takes an ``array_like`` object (e.g. numpy's ndarray) or
     an instance of a gumpy.data.Dataset subclass as first argument.
@@ -414,26 +414,26 @@ def EEG_mean_power(data):
 
 
 
-def bootstrap_resample(X, n=None):
-    """Resample data.
-
-    Args:
-        X (array_like): Input data from which to resample.
-        n (int): Number of elements to sample.
-
-    Returns:
-        ndarray: n elements sampled from X.
-
-    """
-    if isinstance(X, pd.Series):
-        X = X.copy()
-        X.index = range(len(X.index))
-
-    if n is None:
-        n = len(X)
-
-    resample_i = np.floor(np.random.rand(n)*len(X)).astype(int)
-    return np.array(X[resample_i])
+#def bootstrap_resample(X, n=None):
+#    """Resample data.
+#
+#    Args:
+#        X (array_like): Input data from which to resample.
+#        n (int): Number of elements to sample.
+#
+#    Returns:
+#        ndarray: n elements sampled from X.
+#
+#    """
+#    if isinstance(X, pd.Series):
+#        X = X.copy()
+#        X.index = range(len(X.index))
+#
+#    if n is None:
+#        n = len(X)
+#
+#    resample_i = np.floor(np.random.rand(n)*len(X)).astype(int)
+#    return np.array(X[resample_i])
 
 
 
