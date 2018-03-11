@@ -49,7 +49,7 @@ def  stratified_shuffle_Split(features, labels, n_splits,test_size,random_state)
     """
     cv = StratifiedShuffleSplit(n_splits, test_size, random_state=random_state) 
     print("Stratifield Shuffle Split")
-    for train_index, test_index in cv.split(features):
+    for train_index, test_index in cv.split(features,labels):
         print("TRAIN:", train_index, "TEST:", test_index)
         X_train = features[train_index]
         X_test = features[test_index]
