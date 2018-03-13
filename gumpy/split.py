@@ -35,9 +35,7 @@ def  stratified_KFold(features, labels, n_splits):
     """
     skf = StratifiedKFold(n_splits)
     skf.get_n_splits(features, labels)
-    print("KFold")
-    for train_index, test_index in skf.split(features, labels):
-        print("TRAIN:", train_index, "TEST:", test_index)
+    for train_index, test_index in skf.split(features, labels)
         X_train, X_test = features[train_index], features[test_index]
         Y_train, Y_test = labels[train_index], labels[test_index]
     return X_train, X_test, Y_train, Y_test
@@ -48,9 +46,7 @@ def  stratified_shuffle_Split(features, labels, n_splits,test_size,random_state)
     """Stratified ShuffleSplit cross-validator
     """
     cv = StratifiedShuffleSplit(n_splits, test_size, random_state=random_state) 
-    print("Stratifield Shuffle Split")
     for train_index, test_index in cv.split(features,labels):
-        print("TRAIN:", train_index, "TEST:", test_index)
         X_train = features[train_index]
         X_test = features[test_index]
         Y_train = labels[train_index]
@@ -64,9 +60,7 @@ def  shuffle_Split(features, labels, n_splits,test_size,random_state):
     """ShuffleSplit: Random permutation cross-validator
     """
     cv = ShuffleSplit(n_splits, test_size, random_state=random_state) 
-    print("Shuffle Split")
     for train_index, test_index in cv.split(features):
-        print("TRAIN:", train_index, "TEST:", test_index)
         X_train = features[train_index]
         X_test = features[test_index]
         Y_train = labels[train_index]
