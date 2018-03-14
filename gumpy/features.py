@@ -97,7 +97,7 @@ def sequential_feature_selector(features, labels, classifier, k_features, kfold,
 
     elif selection_type == 'SBFS':
         algorithm = "Sequential Backward Floating Selection (SFFS)"
-        sfs = SFS(clf, k_features, forward=True, floating=True,
+        sfs = SFS(clf, k_features, forward=False, floating=True,
                 verbose=2, scoring='accuracy', cv=kfold, n_jobs=-1)
 
     else:
