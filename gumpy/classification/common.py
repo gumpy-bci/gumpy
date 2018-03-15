@@ -19,6 +19,7 @@ from sklearn.linear_model import LogisticRegression as _LogisticRegression
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as _LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis as _QuadraticDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB as _GaussianNB
 from sklearn.ensemble import RandomForestClassifier as _RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier as _DecisionTreeClassifier
 
 
 # some 'good' default values across different classifiers
@@ -136,6 +137,22 @@ class LDA(Classifier):
         return ClassificationResult(Y_test, Y_pred), self
 
 
+@register_classifier
+class Tree(Classifier):
+    """Decision Tree 
+
+    """
+
+    def __init__(self, **kwargs):
+        super(Tree, self).__init__()
+        self.clf = _DecisionTreeClassifier(**kwargs)
+
+
+    def run(self, X_train, Y_train, X_test, Y_test, **kwargs):
+        self.clf.fit(X_train, Y_train.astype(int))
+        Y_pred = self.clf.predict(X_test)
+        return ClassificationResult(Y_test, Y_pred), self
+    
 
 @register_classifier
 class LogisticRegression(Classifier):
