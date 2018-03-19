@@ -8,6 +8,7 @@ functions provided within this module can be adapted easily.
 from .data.dataset import Dataset
 import signal
 import numpy as np
+import warnings
 
 # TODO: documentation
 
@@ -38,6 +39,7 @@ def extract_trials(data, filtered=None, trials=None, labels=None, sampling_freq=
     # Indices of class 1 and 2
     c1_idxs = np.where(labels == 0)[0]  # 1 means left
     c2_idxs = np.where(labels == 1)[0]  # 2 means right
+
     c1_trials = trials[c1_idxs]
     c2_trials = trials[c2_idxs]
 
@@ -45,6 +47,7 @@ def extract_trials(data, filtered=None, trials=None, labels=None, sampling_freq=
     raw_c3_c1_a = np.zeros((len(c1_idxs), fs*(trial_len+trial_offset)))
     raw_c4_c1_a = np.zeros((len(c1_idxs), fs*(trial_len+trial_offset)))
     raw_cz_c1_a = np.zeros((len(c1_idxs), fs*(trial_len+trial_offset)))
+
     raw_c3_c2_a = np.zeros((len(c2_idxs), fs*(trial_len+trial_offset)))
     raw_c4_c2_a = np.zeros((len(c2_idxs), fs*(trial_len+trial_offset)))
     raw_cz_c2_a = np.zeros((len(c2_idxs), fs*(trial_len+trial_offset)))
@@ -60,6 +63,50 @@ def extract_trials(data, filtered=None, trials=None, labels=None, sampling_freq=
         raw_cz_c2_a[i,:] = _data[idx_c2-(trial_offset*fs) : idx_c2+(trial_len*fs), 1]
 
     return np.array((raw_c3_c1_a, raw_c4_c1_a, raw_cz_c1_a, raw_c3_c2_a, raw_c4_c2_a, raw_cz_c2_a))
+
+
+# TODO: merge extract_trials and extract_trials2
+def extract_trials2(raw_data, trials, labels, trial_total, fs, nbClasses):
+    """
+    raw_data:       Raw EEG data                (n_samples,n_channels)
+    trials:         Starting sample of a trial  (n_trials,)
+    labels:         Corresponding label         (n_labels,)
+    trial_total:    Total length of trial [sec] scalar
+    fs:             Sampling frequency in [Hz]  scalar
+    """
+    warnings.warn("Function extract_trials2 will be removed in the future.", PendingDeprecationWarning)
+
+    # get class indecis
+    class1_idxs = np.where(labels == 0)[0]
+    class2_idxs = np.where(labels == 1)[0]
+    class3_idxs = np.where(labels == 2)[0]
+
+    # init data lists for each class
+    #                     (n_trials,          n_samples,      n_channels        )
+    class1_data = np.zeros((len(class1_idxs), trial_total*fs, raw_data.shape[1]))
+    class2_data = np.zeros((len(class2_idxs), trial_total*fs, raw_data.shape[1]))
+    class3_data = np.zeros((len(class3_idxs), trial_total*fs, raw_data.shape[1]))
+
+    # split data class 1
+    for i, c1_idx in enumerate(class1_idxs):    # iterate over trials
+        trial = raw_data[trials[c1_idx] : trials[c1_idx]+trial_total*fs]    # (n_samples, n_channels)
+        class1_data[i,:,:] = trial
+    # split data class 2
+    for i, c2_idx in enumerate(class2_idxs):    # iterate over trials
+        trial = raw_data[trials[c2_idx] : trials[c2_idx]+trial_total*fs]    # (n_samples, n_channels)
+        class2_data[i,:,:] = trial
+    # split data class 3
+    if nbClasses == 3:
+        for i, c3_idx in enumerate(class3_idxs):    # iterate over trials
+            trial = raw_data[trials[c3_idx] : trials[c3_idx]+trial_total*fs]    # (n_samples, n_channels)
+            class3_data[i,:,:] = trial
+
+
+    if nbClasses == 2:
+        return class1_data, class2_data
+    else:
+        return class1_data, class2_data, class3_data
+
 
 
 

@@ -25,6 +25,7 @@ from .data.dataset import Dataset
 import numpy as np
 import pandas as pd
 import scipy.signal
+from scipy.signal import butter, lfilter, freqz, iirnotch, filtfilt
 import scipy.stats
 import sklearn.decomposition
 import pywt
@@ -317,8 +318,8 @@ class Notch:
         self.Q = Q
 
         nyq = 0.5 * fs
-        cut = cutoff / nyq
-        self.b, self.a = scipy.signal.iirnotch(cut, Q)
+        w0 = cutoff / nyq
+        self.b, self.a = scipy.signal.iirnotch(w0, Q)
 
 
     def process(self, data, axis=0):
@@ -336,7 +337,7 @@ class Notch:
 
 
 
-def notch(data, cutoff=50, axis=0, Q=30, fs=256):
+def notch(data, cutoff, axis=0, **kwargs):
     """Apply a notch filter to data.
 
     The function either takes an ``array_like`` object (e.g. numpy's ndarray) or
@@ -359,7 +360,7 @@ def notch(data, cutoff=50, axis=0, Q=30, fs=256):
         reshaped = [f.reshape(-1, 1) for f in filtered]
         return np.hstack(reshaped)
     else:
-        flt = Notch(cutoff)
+        flt = Notch(cutoff, **kwargs)
         return flt.process(data, axis)
 
 
@@ -534,3 +535,30 @@ def artifact_removal(X, n_components=None, check_result=True):
 
     return S_reconst, A_mixing
 
+
+def sliding_window(data, labels, window_sz, n_hop, n_start=0, show_status=False):
+    """
+    input: (array) data : matrix to be processed
+           (int)   window_sz : nb of samples to be used in the window
+           (int)   n_hop : size of jump between windows
+    output:(array) new_data : output matrix of size (None, window_sz, feature_dim)
+
+    """
+    flag = 0
+    for sample in range(data.shape[0]):
+        tmp = np.array(
+            [data[sample, i:i + window_sz, :] for i in np.arange(n_start, data.shape[1] - window_sz + n_hop, n_hop)])
+
+        tmp_lab = np.array([labels[sample] for i in np.arange(n_start, data.shape[1] - window_sz + n_hop, n_hop)])
+
+        if sample % 100 == 0 and show_status == True:
+            print("Sample " + str(sample) + "processed!\n")
+
+        if flag == 0:
+            new_data = tmp
+            new_lab = tmp_lab
+            flag = 1
+        else:
+            new_data = np.concatenate((new_data, tmp))
+            new_lab = np.concatenate((new_lab, tmp_lab))
+    return new_data, new_lab
