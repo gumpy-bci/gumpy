@@ -5,7 +5,13 @@ from sklearn.model_selection import ShuffleSplit, StratifiedShuffleSplit, cross_
 
 def normal(X, labels, test_size):
     """Split a dataset into training and test parts.
-
+     Args:
+        X (numpy.ndarray): 2D features matrix 
+        labels: labels vector 
+        test_size: size of the split
+        
+    Returns:
+        A 2D CSP features matrix 
     """
     Y = labels
     X_train, X_test, Y_train, Y_test = \

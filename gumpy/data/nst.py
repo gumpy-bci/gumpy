@@ -36,11 +36,11 @@ class NST(Dataset):
 
         # all NST datasets have the same configuration and parameters
         # length of a trial after trial_sample (in seconds)
-        self.trial_len = 5
+        self.trial_len = 4
         # idle period prior to trial start (in seconds)
-        self.trial_offset = 5
+        self.trial_offset = 4
         # total time of the trial
-        self.trial_total = self.trial_offset + self.trial_len
+        self.trial_total = self.trial_offset + self.trial_len+2
         # interval of motor imagery within trial_t (in seconds)
         self.mi_interval = [self.trial_offset, self.trial_offset + self.trial_len]
 
@@ -52,9 +52,14 @@ class NST(Dataset):
 
         # TODO: change the files on disk, don't check in here...
         # the first few sessions had a different file type
-        self.f0 = os.path.join(self.data_dir, 'Run1.mat')
-        self.f1 = os.path.join(self.data_dir, 'Run2.mat')
-        self.f2 = os.path.join(self.data_dir, 'Run3.mat')
+        if self.data_id in ['S1', 'S2', 'S3']:
+            self.f0 = os.path.join(self.data_dir, 's1.mat')
+            self.f1 = os.path.join(self.data_dir, 's2.mat')
+            self.f2 = os.path.join(self.data_dir, 's3.mat')
+        else:
+            self.f0 = os.path.join(self.data_dir, 'Run1.mat')
+            self.f1 = os.path.join(self.data_dir, 'Run2.mat')
+            self.f2 = os.path.join(self.data_dir, 'Run3.mat')
 
         # check if files are available
         for f in [self.f0, self.f1, self.f2]:
@@ -70,7 +75,7 @@ class NST(Dataset):
         """
         mat1 = scipy.io.loadmat(self.f0)
         mat2 = scipy.io.loadmat(self.f1)
-        mat3 = scipy.io.loadmat(self.f1)
+        mat3 = scipy.io.loadmat(self.f2)
 
         fs = mat1['Fs'].flatten()[0]
         # read matlab data

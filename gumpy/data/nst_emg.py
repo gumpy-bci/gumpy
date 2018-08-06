@@ -11,6 +11,8 @@ class NST_EMG(Dataset):
     subdirectory. The implementation follows this structuring, i.e. the user
     needs to pass a base-directory as well as the identifier upon instantiation.
 
+    If you require a copy of the data, please contact one of the gumpy authors.
+
     """
 
     def __init__(self, base_dir, identifier, force_level, **kwargs):
@@ -60,6 +62,7 @@ class NST_EMG(Dataset):
 
         file_list_highForce = []
         file_list_lowForce = []
+
         # S1
         if self.data_id == 'S1':
             file_list_highForce = ['session_14_26_15_01_2018.mat', 'session_14_35_15_01_2018.mat', 'session_14_43_15_01_2018.mat']
@@ -75,6 +78,12 @@ class NST_EMG(Dataset):
             file_list_highForce = ['session_13_04_16_01_2018.mat', 'session_13_10_16_01_2018.mat', 'session_13_18_16_01_2018.mat']
             file_list_lowForce = ['session_13_26_16_01_2018.mat', 'session_13_31_16_01_2018.mat', 'session_13_35_16_01_2018.mat']
 
+        # S4
+        elif self.data_id == 'S4':
+            file_list_highForce = ['session_13_36_09_03_2018', 'session_13_39_09_03_2018']
+            file_list_lowForce = ['session_13_42_09_03_2018', 'session_13_44_09_03_2018']
+
+        # S4
         if self.force_level == 'high':
             self.fileList = file_list_highForce
         elif self.force_level == 'low':

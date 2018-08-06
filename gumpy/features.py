@@ -7,6 +7,9 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 from mlxtend.plotting import plot_sequential_feature_selection as plot_sfs
+import numpy as np
+import scipy.linalg as la
+import pywt
 
 
 def sequential_feature_selector(features, labels, classifier, k_features, kfold, selection_type, plot=True, **kwargs):
@@ -97,7 +100,7 @@ def sequential_feature_selector(features, labels, classifier, k_features, kfold,
 
     elif selection_type == 'SBFS':
         algorithm = "Sequential Backward Floating Selection (SFFS)"
-        sfs = SFS(clf, k_features, forward=False, floating=True,
+        sfs = SFS(clf, k_features, forward=True, floating=True,
                 verbose=2, scoring='accuracy', cv=kfold, n_jobs=-1)
 
     else:
@@ -117,9 +120,36 @@ def sequential_feature_selector(features, labels, classifier, k_features, kfold,
         plt.grid()
         plt.show()
 
-    return feature_idx, cv_scores, algorithm
+    return feature_idx, cv_scores, algorithm, sfs, clf
 
 
+# TODO: improve description of argument. I have no clue what exactly I should
+# pass to the function!
+def CSP(tasks):
+    """This function extracts Common Spatial Pattern (CSP) features.
+
+    Args:
+        For N tasks, N arrays are passed to CSP each with dimensionality (# of
+        trials of task N) x (feature vector)
+
+    Returns:
+        A 2D CSP features matrix.
+
+    """
+	if len(tasks) < 2:
+		print("Must have at least 2 tasks for filtering.")
+		return (None,) * len(tasks)
+	else:
+		filters = ()
+		# CSP algorithm
+		# For each task x, find the mean variance matrices Rx and not_Rx, which will be used to compute spatial filter SFx
+		iterator = range(0,len(tasks))
+		for x in iterator:
+			# Find Rx
+			Rx = covarianceMatrix(tasks[x][0])
+			for t in range(1,len(tasks[x])):
+				Rx += covarianceMatrix(tasks[x][t])
+			Rx = Rx / len(tasks[x])
 
 
 def PCA_dim_red(features, var_desired):

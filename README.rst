@@ -41,6 +41,7 @@ gumpy core developers and contributors
 * Zied Tayeb
 * Nicolai Waniek, www.github.com/rochus
 * Juri Fedjae
+* Nejla Ghaboosi
 * Leonard Richly
 
 
