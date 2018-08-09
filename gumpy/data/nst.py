@@ -52,14 +52,9 @@ class NST(Dataset):
 
         # TODO: change the files on disk, don't check in here...
         # the first few sessions had a different file type
-        if self.data_id in ['S1', 'S2', 'S3']:
-            self.f0 = os.path.join(self.data_dir, 's1.mat')
-            self.f1 = os.path.join(self.data_dir, 's2.mat')
-            self.f2 = os.path.join(self.data_dir, 's3.mat')
-        else:
-            self.f0 = os.path.join(self.data_dir, 'Run1.mat')
-            self.f1 = os.path.join(self.data_dir, 'Run2.mat')
-            self.f2 = os.path.join(self.data_dir, 'Run3.mat')
+        self.f0 = os.path.join(self.data_dir, 'Run1.mat')
+        self.f1 = os.path.join(self.data_dir, 'Run2.mat')
+        self.f2 = os.path.join(self.data_dir, 'Run3.mat')
 
         # check if files are available
         for f in [self.f0, self.f1, self.f2]:
