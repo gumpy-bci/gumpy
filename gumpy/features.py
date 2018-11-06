@@ -249,38 +249,7 @@ def PCA_dim_red(features, var_desired):
             return features_reduced
 
 
-def RMS_features_extraction(data, trial_list, window_size, window_shift):
-    """Extract RMS features from data
 
-    Args:
-        data: 2D (time points, Channels)
-	    trial_list: list of the trials
-	    window_size: Size of the window for extracting features
-	    window_shift: size of the overalp
-
-    Returns:
-        The features matrix (trials, features)
-    """
-    if window_shift > window_size:
-        raise ValueError("window_shift > window_size")
-
-    fs = data.sampling_freq
-
-    n_features = int(data.duration/(window_size-window_shift))
-
-    X = np.zeros((len(trial_list), n_features*4))
-
-    t = 0
-    for trial in trial_list:
-        # x3 is the worst of all with 43.3% average performance
-        x1=gumpy.signal.rms(trial[0], fs, window_size, window_shift)
-        x2=gumpy.signal.rms(trial[1], fs, window_size, window_shift)
-        x3=gumpy.signal.rms(trial[2], fs, window_size, window_shift)
-        x4=gumpy.signal.rms(trial[3], fs, window_size, window_shift)
-        x=np.concatenate((x1, x2, x3, x4))
-        X[t, :] = np.array([x])
-        t += 1
-    return X
 
 
 def dwt_features(data, trials, level, sampling_freq, w, n, wavelet):
@@ -319,39 +288,7 @@ def dwt_features(data, trials, level, sampling_freq, w, n, wavelet):
     return X
 
 
-def alpha_subBP_features(data):
-	"""Extract alpha bands
 
-    Args:
-        data: 2D (time points, Channels)
-
-    Returns:
-        The alpha sub-bands
-    """
-    # filter data in sub-bands by specification of low- and high-cut frequencies
-    alpha1 = gumpy.signal.butter_bandpass(data, 8.5, 11.5, order=6)
-    alpha2 = gumpy.signal.butter_bandpass(data, 9.0, 12.5, order=6)
-    alpha3 = gumpy.signal.butter_bandpass(data, 9.5, 11.5, order=6)
-    alpha4 = gumpy.signal.butter_bandpass(data, 8.0, 10.5, order=6)
-
-    # return a list of sub-bands
-    return [alpha1, alpha2, alpha3, alpha4]
-
-
-def beta_subBP_features(data):
-   """Extract beta bands
-
-    Args:
-        data: 2D (time points, Channels)
-
-    Returns:
-        The beta sub-bands
-    """
-    beta1 = gumpy.signal.butter_bandpass(data, 14.0, 30.0, order=6)
-    beta2 = gumpy.signal.butter_bandpass(data, 16.0, 17.0, order=6)
-    beta3 = gumpy.signal.butter_bandpass(data, 17.0, 18.0, order=6)
-    beta4 = gumpy.signal.butter_bandpass(data, 18.0, 19.0, order=6)
-    return [beta1, beta2, beta3, beta4]
 
 
 def powermean(data, trial, fs, w):
