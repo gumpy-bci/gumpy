@@ -339,7 +339,7 @@ def alpha_subBP_features(data):
 
 
 def beta_subBP_features(data):
-   """Extract beta bands
+    """Extract beta bands
 
     Args:
         data: 2D (time points, Channels)
@@ -355,7 +355,7 @@ def beta_subBP_features(data):
 
 
 def powermean(data, trial, fs, w):
-   """Compute the mean power of the data
+    """Compute the mean power of the data
 
     Args:
         data: 2D (time points, Channels)
