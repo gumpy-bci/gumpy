@@ -137,38 +137,38 @@ def CSP(tasks):
 
     """
     if len(tasks) < 2:
-		print("Must have at least 2 tasks for filtering.")
-		return (None,) * len(tasks)
-	else:
-		filters = ()
-		# CSP algorithm
-		# For each task x, find the mean variance matrices Rx and not_Rx, which will be used to compute spatial filter SFx
-		iterator = range(0,len(tasks))
-		for x in iterator:
-			# Find Rx
-			Rx = covarianceMatrix(tasks[x][0])
-			for t in range(1,len(tasks[x])):
-				Rx += covarianceMatrix(tasks[x][t])
-			Rx = Rx / len(tasks[x])
+        print("Must have at least 2 tasks for filtering.")
+        return (None,) * len(tasks)
+    else:
+        filters = ()
+        # CSP algorithm
+        # For each task x, find the mean variance matrices Rx and not_Rx, which will be used to compute spatial filter SFx
+        iterator = range(0,len(tasks))
+        for x in iterator:
+            # Find Rx
+            Rx = covarianceMatrix(tasks[x][0])
+            for t in range(1,len(tasks[x])):
+                Rx += covarianceMatrix(tasks[x][t])
+            Rx = Rx / len(tasks[x])
 
-			# Find not_Rx
-			count = 0
-			not_Rx = Rx * 0
-			for not_x in [element for element in iterator if element != x]:
-				for t in range(0,len(tasks[not_x])):
-					not_Rx += covarianceMatrix(tasks[not_x][t])
-					count += 1
-			not_Rx = not_Rx / count
+            # Find not_Rx
+            count = 0
+            not_Rx = Rx * 0
+            for not_x in [element for element in iterator if element != x]:
+                for t in range(0,len(tasks[not_x])):
+                    not_Rx += covarianceMatrix(tasks[not_x][t])
+                    count += 1
+            not_Rx = not_Rx / count
 
-			# Find the spatial filter SFx
-			SFx = spatialFilter(Rx,not_Rx)
-			filters += (SFx,)
+            # Find the spatial filter SFx
+            SFx = spatialFilter(Rx,not_Rx)
+            filters += (SFx,)
 
-			# Special case: only two tasks, no need to compute any more mean variances
-			if len(tasks) == 2:
-				filters += (spatialFilter(not_Rx,Rx),)
-				break
-		return filters
+            # Special case: only two tasks, no need to compute any more mean variances
+            if len(tasks) == 2:
+                filters += (spatialFilter(not_Rx,Rx),)
+                break
+        return filters
 
 
 # covarianceMatrix takes a matrix A and returns the covariance matrix, scaled by the variance
@@ -181,13 +181,13 @@ def covarianceMatrix(A):
     Returns:
         A 2D covariance matrix scaled by the variance
     """
-	#Ca = np.dot(A,np.transpose(A))/np.trace(np.dot(A,np.transpose(A)))
-	Ca = np.cov(A)
-	return Ca
+    #Ca = np.dot(A,np.transpose(A))/np.trace(np.dot(A,np.transpose(A)))
+    Ca = np.cov(A)
+    return Ca
 
 
 def spatialFilter(Ra,Rb):
-	"""This function extracts spatial filters
+    """This function extracts spatial filters
 
     Args:
         Ra, Rb: Covariance matrices Ra and Rb
@@ -196,33 +196,33 @@ def spatialFilter(Ra,Rb):
         A 2D spatial filter matrix
     """
 
-	R = Ra + Rb
-	E,U = la.eig(R)
+    R = Ra + Rb
+    E,U = la.eig(R)
 
-	# CSP requires the eigenvalues E and eigenvector U be sorted in descending order
-	ord = np.argsort(E)
-	ord = ord[::-1] # argsort gives ascending order, flip to get descending
-	E = E[ord]
-	U = U[:,ord]
+    # CSP requires the eigenvalues E and eigenvector U be sorted in descending order
+    ord = np.argsort(E)
+    ord = ord[::-1] # argsort gives ascending order, flip to get descending
+    E = E[ord]
+    U = U[:,ord]
 
-	# Find the whitening transformation matrix
-	P = np.dot(np.sqrt(la.inv(np.diag(E))),np.transpose(U))
+    # Find the whitening transformation matrix
+    P = np.dot(np.sqrt(la.inv(np.diag(E))),np.transpose(U))
 
-	# The mean covariance matrices may now be transformed
-	Sa = np.dot(P,np.dot(Ra,np.transpose(P)))
-	Sb = np.dot(P,np.dot(Rb,np.transpose(P)))
+    # The mean covariance matrices may now be transformed
+    Sa = np.dot(P,np.dot(Ra,np.transpose(P)))
+    Sb = np.dot(P,np.dot(Rb,np.transpose(P)))
 
-	# Find and sort the generalized eigenvalues and eigenvector
-	E1,U1 = la.eig(Sa,Sb)
-	ord1 = np.argsort(E1)
-	ord1 = ord1[::-1]
-	E1 = E1[ord1]
-	U1 = U1[:,ord1]
+    # Find and sort the generalized eigenvalues and eigenvector
+    E1,U1 = la.eig(Sa,Sb)
+    ord1 = np.argsort(E1)
+    ord1 = ord1[::-1]
+    E1 = E1[ord1]
+    U1 = U1[:,ord1]
 
-	# The projection matrix (the spatial filter) may now be obtained
-	SFa = np.dot(np.transpose(U1),P)
-	#return SFa.astype(np.float32)
-	return SFa
+    # The projection matrix (the spatial filter) may now be obtained
+    SFa = np.dot(np.transpose(U1),P)
+    #return SFa.astype(np.float32)
+    return SFa
 
 
 def PCA_dim_red(features, var_desired):
@@ -254,9 +254,9 @@ def RMS_features_extraction(data, trial_list, window_size, window_shift):
 
     Args:
         data: 2D (time points, Channels)
-	    trial_list: list of the trials
-	    window_size: Size of the window for extracting features
-	    window_shift: size of the overalp
+        trial_list: list of the trials
+        window_size: Size of the window for extracting features
+        window_shift: size of the overalp
 
     Returns:
         The features matrix (trials, features)
@@ -320,7 +320,7 @@ def dwt_features(data, trials, level, sampling_freq, w, n, wavelet):
 
 
 def alpha_subBP_features(data):
-	"""Extract alpha bands
+    """Extract alpha bands
 
     Args:
         data: 2D (time points, Channels)
@@ -372,7 +372,7 @@ def powermean(data, trial, fs, w):
 
 
 def log_subBP_feature_extraction(alpha, beta, trials, fs, w):
-	"""Extract the log power of alpha and beta bands
+    """Extract the log power of alpha and beta bands
 
     Args:
         alpha: filtered data in the alpha band
